@@ -8,6 +8,7 @@ import IconCircle from '@/components/ui/IconCircle'
  * layout="row"    — icon on the left, text on the right (Apply "Why Apply", About "Why Choose").
  * layout="column" — icon on top, text below (Home "Why Choose" grid).
  * tint  — Card tint (white, surface, blue, green …).   tone — icon colour.
+ * compact — smaller text and tighter spacing (Apply Now page).
  * shape — "circle" or "square" icon box.   bordered={false} drops the card chrome entirely.
  */
 export default function FeatureCard({
@@ -19,6 +20,7 @@ export default function FeatureCard({
   tone = 'blue',
   shape = 'circle',
   iconSize = 'md',
+  compact = false,
   bordered = true,
   className,
 }) {
@@ -32,7 +34,14 @@ export default function FeatureCard({
         className={bordered && tint !== 'white' && 'bg-white'}
       />
       <div className="min-w-0">
-        <h3 className="text-base leading-snug font-bold text-ink">{title}</h3>
+        <h3
+          className={cn(
+            'leading-snug text-ink',
+            compact ? 'text-[0.8125rem] font-semibold lg:text-sm' : 'text-base font-bold',
+          )}
+        >
+          {title}
+        </h3>
         {text && <p className="mt-1 text-[0.9375rem] leading-snug text-body">{text}</p>}
       </div>
     </div>

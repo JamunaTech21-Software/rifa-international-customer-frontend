@@ -8,6 +8,7 @@ import MalaysiaFlag from '@/components/ui/MalaysiaFlag'
 import { image, imagesWithBakedTagline } from '@/data/images'
 
 const heights = {
+  xs: 'lg:min-h-[13rem]',
   sm: 'lg:min-h-[16.5rem]',
   md: 'lg:min-h-[19rem]',
   lg: 'lg:min-h-[21rem]',
@@ -16,6 +17,7 @@ const heights = {
 // Headline sizes measured from the reference designs at 1536px: About 68px, Contact / Recruitment 60–64px,
 // Malaysia Jobs 53px (two long lines).
 const titleSizes = {
+  '2xl': 'text-[2.5rem] sm:text-5xl lg:text-[5rem]',
   xl: 'text-[2.5rem] sm:text-5xl lg:text-[4.375rem]',
   lg: 'text-[2.5rem] sm:text-5xl lg:text-[4rem]',
   md: 'text-[2.25rem] sm:text-5xl lg:text-[3.375rem]',
@@ -46,7 +48,8 @@ function TitleLine({ line }) {
  * subtitle — bold line under the title.   text — paragraph (string or node).
  * imageKey — key from data/images.js.   script — handwritten tagline over the photo ("\n" = line break).
  * showFlag — Malaysian flag top-left.   size — sm | md | lg (banner height on desktop).
- * titleSize — "xl" (About), "lg" (default: Contact, Recruitment, Apply …) or "md" (Malaysia Jobs two-line title).
+ * subtitleSize — "lg" (default) or "md" for long subtitles (Apply Now).
+ * titleSize — "2xl" (Apply Now), "xl" (About), "lg" (default: Contact, Recruitment, Apply …) or "md" (Malaysia Jobs two-line title).
  * children — slot for buttons / badges under the text.
  */
 export default function PageHero({
@@ -61,6 +64,7 @@ export default function PageHero({
   showFlag = false,
   size = 'md',
   titleSize = 'lg',
+  subtitleSize = 'lg',
   className,
   children,
 }) {
@@ -114,7 +118,14 @@ export default function PageHero({
           </h1>
 
           {subtitle && (
-            <p className="mt-1.5 text-xl font-semibold text-ink sm:mt-2 sm:text-[1.5625rem]">{subtitle}</p>
+            <p
+              className={cn(
+                'mt-1.5 font-semibold text-ink sm:mt-2',
+                subtitleSize === 'md' ? 'text-lg sm:text-xl' : 'text-xl sm:text-[1.5625rem]',
+              )}
+            >
+              {subtitle}
+            </p>
           )}
 
           {text && (
