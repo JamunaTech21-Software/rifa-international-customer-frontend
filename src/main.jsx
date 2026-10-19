@@ -2,6 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router'
 import router from '@/router'
+import '@fontsource-variable/figtree'
+import '@fontsource/satisfy'
 import '@/styles/index.css'
 
 createRoot(document.getElementById('root')).render(

@@ -11,6 +11,7 @@ import Seo from '@/components/ui/Seo'
 import HelpBox from '@/components/sections/HelpBox'
 import PageHero from '@/components/sections/PageHero'
 import { image } from '@/data/images'
+import { requiredDocuments } from '@/data/jobSeekerInfo'
 import { steps7 } from '@/data/process'
 
 const BADGES = [
@@ -24,14 +25,6 @@ const TIMELINE = [
   { when: '3–7 Days', what: 'Screening & Interview' },
   { when: '1–2 Weeks', what: 'Medical & Documentation' },
   { when: '2–4 Weeks', what: 'Visa & Departure' },
-]
-
-const DOCUMENTS = [
-  'Valid Passport (minimum 18 months)',
-  'NID Copy',
-  'Recent Passport Size Photo',
-  'Educational Certificate (if applicable)',
-  'Other documents as per job requirements',
 ]
 
 // Card tint + number circle colour for each step tone.
@@ -188,7 +181,7 @@ export default function RecruitmentProcessPage() {
                 Required Documents
               </h2>
               <CheckList
-                items={DOCUMENTS}
+                items={requiredDocuments}
                 size="sm"
                 className="mt-4 gap-y-2.5"
                 itemClassName="text-[0.9375rem]"

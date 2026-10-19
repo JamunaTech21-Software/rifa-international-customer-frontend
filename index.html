@@ -3,22 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a365f" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Satisfy&display=swap"
-    />
     <title>Rifa International (RL-693) | Jobs in Malaysia</title>
     <meta
+      data-seo-default
       name="description"
       content="Rifa International (RL-693) – government approved recruiting agency for jobs in Malaysia."
     />
+    <!-- Fallback tags for crawlers that do not run JavaScript. data-seo-default tags are removed once <Seo> renders the page-specific ones. -->
+    <meta data-seo-default property="og:type" content="website" />
+    <meta data-seo-default property="og:site_name" content="Rifa International" />
+    <meta data-seo-default property="og:title" content="Rifa International (RL-693) | Jobs in Malaysia" />
+    <meta
+      data-seo-default
+      property="og:description"
+      content="Rifa International (RL-693) – government approved recruiting agency for jobs in Malaysia."
+    />
+    <meta data-seo-default property="og:image" content="__SITE_URL__/og-default.jpg" />
+    <meta data-seo-default property="og:image:width" content="1200" />
+    <meta data-seo-default property="og:image:height" content="630" />
+    <meta data-seo-default name="twitter:card" content="summary_large_image" />
+    <meta data-seo-default name="twitter:image" content="__SITE_URL__/og-default.jpg" />
+    <!-- Start downloading the hero photo before the app code runs (it is the largest thing on screen). -->
+    <script>
+      ;(function () {
+        var hero = {
+          '/': 'hero-home',
+          '/about': 'hero-about',
+          '/malaysia-jobs': 'hero-malaysia-jobs',
+          '/recruitment-process': 'hero-recruitment-process',
+          '/contact': 'hero-contact',
+          '/apply': 'hero-apply',
+        }[location.pathname.length > 1 ? location.pathname.replace(/\/$/, '') : '/']
+        if (!hero) return
+        var link = document.createElement('link')
+        link.rel = 'preload'
+        link.as = 'image'
+        link.href = '/images/ref/' + hero + '.webp'
+        link.setAttribute('fetchpriority', 'high')
+        document.head.appendChild(link)
+      })()
+    </script>
+    <!-- Instant first paint: a static header shell shown until the app mounts (React replaces #root's contents). -->
+    <style>
+      body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#fff}
+      .shell-top{height:44px;background:linear-gradient(90deg,#003661,#0b4672)}
+      .shell-bar{display:flex;align-items:center;height:64px;padding:0 16px;box-shadow:0 2px 12px rgba(10,54,95,.08)}
+      .shell-name{font-weight:800;font-size:22px;letter-spacing:-.01em;color:#0a365f}
+      .shell-name small{display:block;font-size:10px;font-weight:700;letter-spacing:.18em;color:#0a365f}
+      .shell-hero{min-height:300px;background:linear-gradient(90deg,#e8f3fa,#eaf4fd 55%,#fff)}
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="shell-top"></div>
+      <div class="shell-bar"><span class="shell-name">RIFA<small>INTERNATIONAL</small></span></div>
+      <div class="shell-hero"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

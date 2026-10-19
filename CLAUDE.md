@@ -50,8 +50,8 @@ Form controls take `ref` as a normal prop (React 19), so `{...register('name')}`
 | `/services` | ServicesPage | FE-12 |
 | `/job-seekers` | JobSeekersPage | FE-13 |
 | `/employers` | EmployersPage | FE-14 |
-| `/news`, `/career` | NewsPage, CareerPage | FE-15 |
-| `/faq`, `*` | FaqPage, NotFoundPage | FE-16 |
+| `/news`, `/news/:slug`, `/career` | NewsPage, NewsDetailPage, CareerPage | FE-15 |
+| `/faq`, `*` | FaqPage, NotFoundPage (router errorElement: ErrorPage) | FE-16 |
 | `/dev/ui` | UI kit preview (dev only) | SET-05 |
 
 ## Design rules — match the references exactly
