@@ -6,7 +6,7 @@ import SocialIcon from '@/components/ui/SocialIcon'
 import { categories } from '@/data/categories'
 import { footerLinks, site } from '@/data/site'
 
-const linkClass = 'rounded-sm text-white/70 transition-colors hover:text-white'
+const linkClass = 'inline-block rounded-sm py-0.5 text-white/70 transition-colors hover:text-white'
 
 function FooterHeading({ children }) {
   return (
@@ -45,7 +45,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-navy-900 text-white/70">
+    <footer className="bg-navy-900 text-white/70 [contain-intrinsic-size:auto_28rem] [content-visibility:auto]">
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12 lg:py-16">
         <div>
           <Link to="/" className="inline-block rounded-sm" aria-label="Rifa International – Home">
@@ -111,7 +111,7 @@ export default function Footer() {
             <ContactItem icon={Clock}>
               {site.hours}
               <br />
-              <span className="text-white/50">{site.hoursNote}</span>
+              <span className="text-white/70">{site.hoursNote}</span>
             </ContactItem>
           </ul>
         </div>

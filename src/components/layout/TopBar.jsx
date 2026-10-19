@@ -8,7 +8,10 @@ const linkClass = 'inline-flex items-center gap-2.5 rounded-sm text-white hover:
 
 export default function TopBar() {
   return (
-    <div className="bg-linear-to-r from-topbar-from to-topbar-to text-sm text-white">
+    <aside
+      aria-label="Contact bar"
+      className="bg-linear-to-r from-topbar-from to-topbar-to text-sm text-white"
+    >
       <Container className="flex h-11 items-center justify-end gap-6 md:justify-between">
         <ul className="hidden items-center gap-8 md:flex">
           <li>
@@ -57,6 +60,6 @@ export default function TopBar() {
           </Link>
         </div>
       </Container>
-    </div>
+    </aside>
   )
 }

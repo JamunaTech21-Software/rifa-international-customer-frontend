@@ -1,4 +1,4 @@
-/* Fonts (Figtree, Satisfy) are loaded with <link> tags in index.html so they start downloading before this CSS. */
+/* Fonts (Figtree, Satisfy) are self-hosted via @fontsource and imported in main.jsx — no third-party request, font-display: swap. */
 @import 'tailwindcss';
 
 /*
@@ -7,8 +7,8 @@
  */
 @theme {
   /* Typography */
-  --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-script: 'Satisfy', 'Brush Script MT', cursive;
 
   --text-display-xl: 4rem; /* page hero H1: "About Us", "Apply Now" */
@@ -59,7 +59,7 @@
   /* Status */
   --color-success-50: #e8f6ee;
   --color-success-600: #07a358;
-  --color-success-700: #008a48;
+  --color-success-700: #00703a; /* darkened from #008a48 to reach 4.5:1 on success-50 */
   --color-warning-50: #fff8e6;
   --color-warning-500: #f5a623;
   --color-danger-50: #fdf0f1;
@@ -82,6 +82,11 @@
   /* Bangladesh flag (PhoneInput prefix) */
   --color-flag-bd-green: #006a4e;
   --color-flag-bd-red: #f42a41;
+
+  /* Social network brand colours (Contact page icons) */
+  --color-brand-facebook: #1877f2;
+  --color-brand-linkedin: #0a66c2;
+  --color-brand-youtube: #ff0000;
 
   /* Malaysia flag (hero decoration) */
   --color-flag-my-red: #cc0001;

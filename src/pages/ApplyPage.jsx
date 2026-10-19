@@ -1,45 +1,20 @@
+import { lazy, Suspense } from 'react'
 import { useSearchParams } from 'react-router'
-import {
-  BedDouble,
-  Coins,
-  FileText,
-  GraduationCap,
-  Handshake,
-  Headset,
-  IdCard,
-  ShieldCheck,
-  UserRound,
-  Users,
-} from 'lucide-react'
-import Card from '@/components/ui/Card'
-import IconCircle from '@/components/ui/IconCircle'
+import { Users } from 'lucide-react'
 import Section from '@/components/ui/Section'
 import SectionHeading from '@/components/ui/SectionHeading'
 import Seo from '@/components/ui/Seo'
 import CtaBanner from '@/components/sections/CtaBanner'
-import FeatureCard from '@/components/sections/FeatureCard'
 import PageHero from '@/components/sections/PageHero'
 import ProcessSteps from '@/components/sections/ProcessSteps'
+import RequirementCards from '@/components/sections/RequirementCards'
+import WhyApplyGrid from '@/components/sections/WhyApplyGrid'
 import { getCategory } from '@/data/categories'
 import { steps6 } from '@/data/process'
-import ApplyForm from '@/features/apply/ApplyForm'
 import useSubmitApplication from '@/features/apply/useSubmitApplication'
 
-const WHY_APPLY = [
-  { icon: ShieldCheck, title: 'Government Approved Recruiting Agency (RL-693)' },
-  { icon: Users, title: 'Genuine Job Opportunities in Malaysia' },
-  { icon: Handshake, title: 'Safe, Legal & Transparent Process' },
-  { icon: BedDouble, title: 'Accommodation (As per Employer)' },
-  { icon: Coins, title: 'Attractive Salary & Overtime' },
-  { icon: Headset, title: 'Full Support from Application to Departure' },
-]
-
-const REQUIREMENTS = [
-  { icon: IdCard, title: 'Valid Passport', note: '(or ready to apply)' },
-  { icon: UserRound, title: 'Age', note: '18 – 45 Years (Varies by Job)' },
-  { icon: GraduationCap, title: 'Minimum Physical Fitness' },
-  { icon: FileText, title: 'Job-specific Skills/Experience', note: '(if required)' },
-]
+// The form (with its validation library) loads after the first paint so the page appears sooner.
+const ApplyForm = lazy(() => import('@/features/apply/ApplyForm'))
 
 export default function ApplyPage() {
   const [params] = useSearchParams()
@@ -77,32 +52,12 @@ export default function ApplyPage() {
           <div className="order-last min-w-0 space-y-5 lg:order-first">
             <div>
               <SectionHeading title="Why Apply with Rifa International?" size="sm" />
-              <ul className="mt-3 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
-                {WHY_APPLY.map((feature) => (
-                  <li key={feature.title} className="min-w-0">
-                    <FeatureCard {...feature} shape="square" iconSize="sm" compact tint="surface" />
-                  </li>
-                ))}
-              </ul>
+              <WhyApplyGrid className="mt-3" />
             </div>
 
             <div>
               <SectionHeading title="Basic Requirements" size="sm" underline />
-              <ul className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
-                {REQUIREMENTS.map((item) => (
-                  <li key={item.title} className="min-w-0">
-                    <Card
-                      padding="sm"
-                      shadow={false}
-                      className="flex h-full flex-col items-center py-3 text-center"
-                    >
-                      <IconCircle icon={item.icon} size="sm" className="bg-transparent text-primary-600" />
-                      <p className="mt-1.5 text-sm leading-snug font-semibold text-ink">{item.title}</p>
-                      {item.note && <p className="text-[0.8125rem] leading-snug text-body">{item.note}</p>}
-                    </Card>
-                  </li>
-                ))}
-              </ul>
+              <RequirementCards className="mt-3" />
             </div>
 
             <div>
@@ -119,7 +74,17 @@ export default function ApplyPage() {
           </div>
 
           <div className="min-w-0 lg:sticky lg:top-24">
-            <ApplyForm defaultCategory={category} onSubmit={submit} errorMessage={errorMessage} />
+            <Suspense
+              fallback={
+                <div
+                  role="status"
+                  aria-label="Loading the application form"
+                  className="min-h-[52rem] rounded-card border border-line bg-surface"
+                />
+              }
+            >
+              <ApplyForm defaultCategory={category} onSubmit={submit} errorMessage={errorMessage} />
+            </Suspense>
           </div>
         </div>
       </Section>

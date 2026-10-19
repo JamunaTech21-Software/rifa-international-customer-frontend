@@ -13,6 +13,7 @@ const titleSizes = {
  */
 export default function SectionHeading({
   as: Tag = 'h2',
+  id,
   eyebrow,
   title,
   highlight,
@@ -49,7 +50,7 @@ export default function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <Tag className={cn(titleSizes[size], 'leading-tight font-bold', inverted && 'text-white')}>
+      <Tag id={id} className={cn(titleSizes[size], 'leading-tight font-bold', inverted && 'text-white')}>
         {titleContent}
       </Tag>
       {underline && (
