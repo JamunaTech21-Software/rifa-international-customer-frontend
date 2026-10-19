@@ -14,6 +14,7 @@ const sizes = {
  * On mobile the steps wrap into 2–3 per row and the arrows are hidden.
  *
  * steps    — [{ icon, title, text? }] from data/process.js.
+ * A step with done: true gets a solid green circle ("completed", success page).
  * numbered — prefix titles with "1.", "2.", …
  * size     — sm (narrow sidebar, small text) | md | lg (icon circle size).
  */
@@ -31,11 +32,21 @@ export default function ProcessSteps({ steps, variant = 'icons', numbered = fals
       {steps.map((step, index) => (
         <Fragment key={step.title}>
           <li className="flex min-w-0 flex-col items-center text-center lg:flex-1">
-            <IconCircle
-              icon={step.icon}
-              size={s.circle}
-              className="border-2 border-primary-100 bg-primary-50"
-            />
+            {step.done ? (
+              <IconCircle
+                icon={step.icon}
+                size={s.circle}
+                tone="green"
+                variant="solid"
+                className="ring-4 ring-tone-green/20"
+              />
+            ) : (
+              <IconCircle
+                icon={step.icon}
+                size={s.circle}
+                className="border-2 border-primary-100 bg-primary-50"
+              />
+            )}
             <p className={cn('mt-2.5 leading-tight font-semibold text-ink', s.title)}>
               {numbered && `${index + 1}. `}
               {step.title}

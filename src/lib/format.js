@@ -23,6 +23,13 @@ export function formatDate(value) {
   return date.toLocaleDateString('en-GB', { timeZone: DHAKA, day: 'numeric', month: 'long', year: 'numeric' })
 }
 
+// "10:32 AM" in Bangladesh time.
+export function formatTime(value) {
+  const date = value instanceof Date ? value : new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  return date.toLocaleTimeString('en-US', { timeZone: DHAKA, hour: 'numeric', minute: '2-digit' })
+}
+
 // formatRm(1800, 2200) → "RM 1,800 - 2,200"; formatRm(1800) → "RM 1,800"
 export function formatRm(min, max) {
   if (min == null && max == null) return ''

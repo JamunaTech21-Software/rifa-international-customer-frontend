@@ -17,6 +17,8 @@ function acceptLabel(accept) {
  * Click or drag-and-drop file picker. Controlled: `value` (File | null) + `onChange(file | null)` —
  * use react-hook-form's <Controller>. Rejects wrong types and files over maxSizeMb with an inline error.
  *
+ * typeMessage / sizeMessage — replace the built-in rejection texts (e.g. "CV must be a PDF, JPG or PNG file.").
+ *
  * variant="row"  — icon box + title + hint in one dashed row (Apply form, design 1).
  * variant="tile" — titled card with a dashed "Click to upload or drag and drop" area (Apply form, design 2).
  */
@@ -31,6 +33,8 @@ export default function FileDrop({
   onBlur,
   name,
   required = false,
+  typeMessage,
+  sizeMessage,
   variant = 'row',
   error,
   invalid = false,
@@ -58,11 +62,11 @@ export default function FileDrop({
     const allowed = accept.split(',').map((ext) => ext.trim().toLowerCase())
     const ext = `.${file.name.split('.').pop().toLowerCase()}`
     if (!allowed.includes(ext)) {
-      setLocalError(`Please upload a ${acceptLabel(accept)} file.`)
+      setLocalError(typeMessage ?? `Please upload a ${acceptLabel(accept)} file.`)
       return
     }
     if (file.size > maxSizeMb * 1024 * 1024) {
-      setLocalError(`File is too large. Maximum size is ${maxSizeMb} MB.`)
+      setLocalError(sizeMessage ?? `File is too large. Maximum size is ${maxSizeMb} MB.`)
       return
     }
     setLocalError('')
@@ -159,6 +163,7 @@ export default function FileDrop({
               onClick={() => inputRef.current?.click()}
               onBlur={onBlur}
               aria-describedby={ariaDescribedBy}
+              aria-invalid={invalid || shownError ? true : undefined}
               aria-label={`Upload ${label}`}
               className={cn(
                 'flex flex-1 flex-col items-center justify-center gap-1.5 rounded-lg px-3 py-5 text-center',
@@ -183,10 +188,11 @@ export default function FileDrop({
               onClick={() => inputRef.current?.click()}
               onBlur={onBlur}
               aria-describedby={ariaDescribedBy}
-              className="flex w-full items-center gap-4 rounded-card px-4 py-4 text-left sm:px-6"
+              aria-invalid={invalid || shownError ? true : undefined}
+              className="flex w-full items-center gap-3.5 rounded-card px-4 py-3 text-left sm:px-5"
               {...dragProps}
             >
-              <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary-600 text-white">
+              <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-600 text-white">
                 <Icon size={24} aria-hidden="true" />
               </span>
               <span className="min-w-0">

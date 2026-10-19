@@ -77,12 +77,12 @@ export const steps7 = [
 
 /** Apply page — 6 icon steps with a short line under each. @type {ProcessStep[]} */
 export const steps6 = [
-  { icon: ClipboardList, title: 'Apply Online', text: 'Fill out the application form' },
-  { icon: Search, title: 'Screening & Shortlisting', text: 'We will review your application' },
-  { icon: Phone, title: 'Interview', text: 'Employer selection (online / physical)' },
-  { icon: Stethoscope, title: 'Medical Checkup', text: 'Complete medical checkup' },
-  { icon: BookUser, title: 'Visa Processing', text: 'Visa processing & BMET clearance' },
-  { icon: Plane, title: 'Departure', text: 'Fly to Malaysia' },
+  { icon: ClipboardList, title: 'Apply Online', text: '(Fill the Form)' },
+  { icon: Search, title: 'Screening & Shortlisting' },
+  { icon: Phone, title: 'Interview', text: '(Online / Physical)' },
+  { icon: Stethoscope, title: 'Medical Checkup' },
+  { icon: BookUser, title: 'Visa Processing & BMET Clearance' },
+  { icon: Plane, title: 'Departure to Malaysia' },
 ]
 
 /** Malaysia Jobs sidebar — 5 compact icon steps, titles only. @type {ProcessStep[]} */
