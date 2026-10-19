@@ -63,7 +63,7 @@ export const steps7 = [
     icon: Presentation,
     title: 'Pre-Departure Orientation',
     text: 'You will receive pre-departure briefing on work culture, rules, safety and other important information.',
-    tone: 'teal',
+    tone: 'green',
     imageKey: 'process.orientation',
   },
   {

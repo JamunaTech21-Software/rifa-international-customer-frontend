@@ -16,7 +16,7 @@ const heights = {
 // Headline sizes measured from the reference designs at 1536px: About 68px, Contact / Recruitment 60–64px,
 // Malaysia Jobs 53px (two long lines).
 const titleSizes = {
-  xl: 'text-[2.5rem] sm:text-5xl lg:text-[4.25rem]',
+  xl: 'text-[2.5rem] sm:text-5xl lg:text-[4.375rem]',
   lg: 'text-[2.5rem] sm:text-5xl lg:text-[4rem]',
   md: 'text-[2.25rem] sm:text-5xl lg:text-[3.375rem]',
 }
@@ -75,13 +75,13 @@ export default function PageHero({
       )}
     >
       {showFlag && (
-        <MalaysiaFlag className="absolute -top-5 -left-14 -z-10 hidden w-52 opacity-80 md:block lg:w-60" />
+        <MalaysiaFlag className="absolute -top-4 -left-6 -z-10 hidden w-56 opacity-85 md:block lg:w-72" />
       )}
 
-      <Container className={cn('relative z-10 flex flex-col lg:justify-center', heights[size])}>
-        <div className="py-8 sm:py-10 lg:max-w-[48%] lg:py-12 xl:max-w-[46%]">
+      <Container className={cn('flex flex-col lg:justify-center', heights[size])}>
+        <div className="relative z-10 py-8 sm:py-10 lg:max-w-[48%] lg:py-5 xl:max-w-[46%]">
           {breadcrumb && (
-            <nav aria-label="Breadcrumb" className="mb-5 sm:mb-7">
+            <nav aria-label="Breadcrumb" className="mb-5 sm:mb-6 lg:mb-4">
               <ol className="flex flex-wrap items-center gap-2 text-base text-ink">
                 {breadcrumb.map((crumb, index) => (
                   <li key={crumb.label} className="flex items-center gap-2">
@@ -105,16 +105,22 @@ export default function PageHero({
             </p>
           )}
 
-          <h1 className={cn('leading-[1.08] font-extrabold tracking-tight', titleSizes[titleSize])}>
+          <h1
+            className={cn('leading-[1.02] font-bold tracking-tight lg:leading-[1.0]', titleSizes[titleSize])}
+          >
             {title.map((line, index) => (
               <TitleLine key={index} line={line} />
             ))}
           </h1>
 
-          {subtitle && <p className="mt-2 text-xl font-semibold text-ink sm:mt-3 sm:text-2xl">{subtitle}</p>}
+          {subtitle && (
+            <p className="mt-1.5 text-xl font-semibold text-ink sm:mt-2 sm:text-[1.5625rem]">{subtitle}</p>
+          )}
 
           {text && (
-            <div className="mt-3 max-w-xl text-base leading-relaxed text-body sm:mt-4 sm:text-lg">{text}</div>
+            <div className="mt-2.5 max-w-[31.5rem] text-base leading-snug text-body sm:text-lg sm:leading-[1.3]">
+              {text}
+            </div>
           )}
 
           {children && <div className="mt-6">{children}</div>}

@@ -17,7 +17,7 @@
   --text-display: 3.5rem; /* home hero H1 */
   --text-display--line-height: 1.08;
   --text-display--letter-spacing: -0.02em;
-  --text-section: 2.375rem; /* section titles: "Explore Job Opportunities" */
+  --text-section: 2.5rem; /* section titles: "Explore Job Opportunities" (40px, measured) */
   --text-section--line-height: 1.15;
   --text-section--letter-spacing: -0.01em;
   --text-eyebrow: 0.9375rem; /* uppercase eyebrow above titles */

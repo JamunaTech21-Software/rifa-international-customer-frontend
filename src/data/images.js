@@ -75,7 +75,12 @@ export const images = {
  * Stand-in photos whose handwritten tagline is part of the image itself. PageHero must not draw its
  * `script` text over these, or the tagline would appear twice. Remove keys once real photos are in.
  */
-export const imagesWithBakedTagline = new Set(['hero.recruitment-process', 'hero.contact'])
+export const imagesWithBakedTagline = new Set([
+  'hero.home',
+  'hero.recruitment-process',
+  'hero.contact',
+  'about.banner',
+])
 
 /** Returns the image source for a key ('' if unknown or not uploaded yet). */
 export function image(key) {

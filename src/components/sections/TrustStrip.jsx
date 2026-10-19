@@ -1,5 +1,4 @@
 import { cn } from '@/lib/cn'
-import Container from '@/components/ui/Container'
 import IconCircle from '@/components/ui/IconCircle'
 
 /**
@@ -40,16 +39,15 @@ export default function TrustStrip({ items, variant = 'navy', className }) {
 
   return (
     <div className={cn('relative z-10 -mt-7 rounded-t-[1.75rem] bg-navy-900 text-white', className)}>
-      <Container>
+      {/* Wider than the page container so five columns fit with room for two-line text (as in the design). */}
+      <div className="mx-auto max-w-384 px-4 sm:px-6 2xl:pr-[3.75rem] 2xl:pl-[4.5rem]">
         <ul className="grid gap-x-6 gap-y-6 py-7 sm:grid-cols-2 lg:grid-cols-5 lg:gap-0 lg:py-8">
           {items.map((item, index) => (
             <li
               key={item.title}
               className={cn(
-                'flex items-center gap-3.5 lg:gap-3 lg:px-3.5',
+                'flex items-center gap-3.5 lg:gap-3 lg:px-2.5',
                 index > 0 && 'lg:border-l lg:border-white/20',
-                index === 0 && 'lg:pl-0',
-                index === items.length - 1 && 'lg:pr-0',
               )}
             >
               <IconCircle
@@ -66,7 +64,7 @@ export default function TrustStrip({ items, variant = 'navy', className }) {
             </li>
           ))}
         </ul>
-      </Container>
+      </div>
     </div>
   )
 }

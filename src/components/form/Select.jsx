@@ -5,6 +5,7 @@ import { fieldBase, fieldInvalid, iconCell } from '@/lib/formStyles'
 /**
  * Native select. options: array of strings or { value, label }.
  * placeholder — shown greyed out while the value is empty.
+ * className goes to the <select>; wrapperClassName to the element around it (for flex/grid sizing).
  */
 export default function Select({
   options = [],
@@ -12,11 +13,12 @@ export default function Select({
   icon: Icon,
   invalid = false,
   className,
+  wrapperClassName,
   ref,
   ...rest
 }) {
   return (
-    <div className="relative">
+    <div className={cn('relative', wrapperClassName)}>
       {Icon && (
         <span className={iconCell} aria-hidden="true">
           <Icon size={18} />

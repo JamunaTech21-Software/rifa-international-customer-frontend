@@ -13,16 +13,18 @@ function starPoints(cx, cy, outer, inner) {
 }
 
 /**
- * Decorative waving Malaysian flag for hero corners. Fades out to the right and bottom so it
+ * Malaysian flag. By default a decorative waving flag for hero corners (flat={true} gives the plain flag). Fades out to the right and bottom so it
  * blends into the page. Purely decorative (aria-hidden).
  */
-export default function MalaysiaFlag({ className }) {
+export default function MalaysiaFlag({ className, flat = false }) {
   return (
     <svg
       viewBox="0 0 28 14"
       aria-hidden="true"
       className={cn(
-        'pointer-events-none origin-top-left -rotate-6 skew-y-3 [mask-image:linear-gradient(135deg,black_25%,transparent_85%)]',
+        'pointer-events-none',
+        !flat &&
+          'origin-top-left -rotate-6 skew-y-3 [mask-image:linear-gradient(135deg,black_25%,transparent_85%)]',
         className,
       )}
     >

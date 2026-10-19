@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn'
 import IconCircle from '@/components/ui/IconCircle'
 
 const sizes = {
+  sm: { circle: 'md', arrowBox: 'h-14', title: 'text-xs', text: 'text-[0.6875rem]' },
   md: { circle: 'md', arrowBox: 'h-14', title: 'text-sm', text: 'text-xs' },
   lg: { circle: 'lg', arrowBox: 'h-16', title: 'text-[0.9375rem]', text: 'text-[0.8125rem]' },
 }
@@ -14,7 +15,7 @@ const sizes = {
  *
  * steps    — [{ icon, title, text? }] from data/process.js.
  * numbered — prefix titles with "1.", "2.", …
- * size     — md | lg (icon circle size).
+ * size     — sm (narrow sidebar, small text) | md | lg (icon circle size).
  */
 export default function ProcessSteps({ steps, variant = 'icons', numbered = false, size = 'md', className }) {
   const s = sizes[size]

@@ -12,8 +12,16 @@ import { image } from '@/data/images'
  * count    — optional pill bottom-left ("120+ Jobs"). When shown, the arrow button is hidden
  *            (Malaysia Jobs design); without it the arrow shows bottom-right (Home design).
  * shape    — "wide" (Home, landscape) or "tall" (Malaysia Jobs, portrait).
+ * Other props (e.g. onClick) go to the link — Malaysia Jobs uses onClick to filter in place.
  */
-export default function CategoryCard({ category, count, shape = 'wide', arrow = !count, className }) {
+export default function CategoryCard({
+  category,
+  count,
+  shape = 'wide',
+  arrow = !count,
+  className,
+  ...linkProps
+}) {
   const Icon = category.icon
 
   return (
@@ -25,6 +33,7 @@ export default function CategoryCard({ category, count, shape = 'wide', arrow = 
         className,
       )}
       aria-label={count ? `${category.name} – ${count} jobs` : category.name}
+      {...linkProps}
     >
       <CloudinaryImage
         publicId={image(category.imageKey)}
