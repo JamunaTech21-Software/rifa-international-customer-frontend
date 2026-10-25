@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { ApiError } from '@/api/client'
 import { APPLICATION_FIELDS, submitApplication } from '@/api/applications'
 import { site } from '@/data/site'
+import { scrollToCaptchaError } from '@/features/captcha/useCaptcha'
 
 // API field name → form field name (the reverse of APPLICATION_FIELDS).
 const FORM_FIELD_BY_API_FIELD = Object.fromEntries(
@@ -45,11 +46,13 @@ export default function useSubmitApplication() {
           const field = FORM_FIELD_BY_API_FIELD[apiField]
           if (field) form.setError(field, { type: 'server', message })
         })
-        form.setFocus(
+        const first =
           Object.keys(error.fields)
             .map((apiField) => FORM_FIELD_BY_API_FIELD[apiField])
-            .find(Boolean) ?? 'fullName',
-        )
+            .find(Boolean) ?? 'fullName'
+        // The captcha has no input to focus: bring its message into view instead.
+        if (first === 'captchaToken') scrollToCaptchaError()
+        else form.setFocus(first)
       }
     }
   }

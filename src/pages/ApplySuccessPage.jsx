@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from 'react-router'
+import { Link, Navigate, useLocation } from 'react-router'
 import {
   Briefcase,
   CalendarDays,
@@ -108,7 +108,13 @@ export default function ApplySuccessPage() {
                   {referenceNo}
                 </p>
                 <p className="text-xs text-body">
-                  Please keep this reference number for future communication.
+                  Please keep this reference number for future communication.{' '}
+                  <Link
+                    to={`/check-status?ref=${encodeURIComponent(referenceNo)}`}
+                    className="font-semibold text-primary-600 underline hover:text-primary-700"
+                  >
+                    Check your application status
+                  </Link>
                 </p>
               </div>
             </div>

@@ -4,11 +4,18 @@ import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import CloudinaryImage from '@/components/ui/CloudinaryImage'
 import { image } from '@/data/images'
+import { hasImage } from '@/lib/cloudinary'
 import { formatRm } from '@/lib/format'
+
+// Photo order: the one uploaded in the admin panel, the local photo of the original jobs, then the category photo.
+function jobImage(job) {
+  const candidates = [job.imagePublicId, image(job.imageKey), image(`category.${job.category}`)]
+  return candidates.find((candidate) => hasImage(candidate)) ?? ''
+}
 
 /**
  * Job listing row: photo, title, "employer | Malaysia", location, salary badge and an Apply button on the
- * same row. The Apply button opens /apply with the job's category preselected. job — item from data/jobs.js.
+ * same row. The Apply button opens /apply with the job's category preselected. job — a listing from useJobs() (same shape as data/jobs.js).
  *
  * The card sizes itself from its own width (container queries): narrow cards, such as three across on the
  * Malaysia Jobs page, use smaller text and a compact button; wider cards use the roomier sizes.
@@ -22,7 +29,7 @@ export default function JobCard({ job, className }) {
       )}
     >
       <CloudinaryImage
-        publicId={image(job.imageKey)}
+        publicId={jobImage(job)}
         alt=""
         sizes="96px"
         width={192}

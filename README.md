@@ -37,6 +37,7 @@ The project is ready to deploy as is: `vercel.json` sets the build, makes every 
 | `VITE_API_BASE_URL` | `/api` (default). The API is called at `<VITE_API_BASE_URL>/v1/...`. |
 | `VITE_SITE_URL` | The public site URL, e.g. `https://your-project.vercel.app`, used for canonical links. |
 | `VITE_CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name, once photos are uploaded (empty = built-in photos only). |
+| `VITE_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key for the captcha on the Apply, Contact and status forms (empty = no captcha). Set it, redeploy, then tell the backend developer so that `CAPTCHA_ENABLED` can be switched on. |
 
 `VITE_*` values are baked in at build time, so change a variable and **redeploy** for it to take effect.
 

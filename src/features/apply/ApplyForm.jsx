@@ -11,8 +11,10 @@ import PhoneInput from '@/components/form/PhoneInput'
 import RadioGroup from '@/components/form/RadioGroup'
 import Select from '@/components/form/Select'
 import TextInput from '@/components/form/TextInput'
+import Turnstile from '@/components/form/Turnstile'
 import { ageFromDob } from '@/lib/age'
 import { MAX_FILE_MB, applyDefaults, applySchema } from '@/features/apply/schema'
+import useCaptcha, { scrollToCaptchaError } from '@/features/captcha/useCaptcha'
 import useLookups from '@/features/apply/useLookups'
 
 // The design's inputs are compact on desktop; keep them touch-friendly on phones.
@@ -22,7 +24,10 @@ const CONTROL = 'lg:h-9'
 function focusFirstInvalid() {
   requestAnimationFrame(() => {
     const field = document.querySelector('form [aria-invalid="true"]')
-    if (!field) return
+    if (!field) {
+      scrollToCaptchaError()
+      return
+    }
     field.scrollIntoView({ behavior: 'smooth', block: 'center' })
     if (typeof field.focus === 'function') field.focus({ preventScroll: true })
   })
@@ -51,6 +56,7 @@ export default function ApplyForm({ defaultCategory = '', onSubmit, errorMessage
     formState: { errors, isSubmitting },
   } = form
 
+  const captcha = useCaptcha(form)
   const dateOfBirth = useWatch({ control, name: 'dateOfBirth' })
   const passportStatus = useWatch({ control, name: 'passportStatus' })
   const age = ageFromDob(dateOfBirth)
@@ -67,7 +73,13 @@ export default function ApplyForm({ defaultCategory = '', onSubmit, errorMessage
 
       <form
         noValidate
-        onSubmit={handleSubmit((values) => onSubmit?.(values, form), focusFirstInvalid)}
+        onSubmit={handleSubmit(async (values) => {
+          try {
+            await onSubmit?.(values, form)
+          } finally {
+            captcha.reset() // a captcha token works once
+          }
+        }, focusFirstInvalid)}
         className="px-5 py-4 sm:px-6 sm:py-5"
       >
         {errorMessage && (
@@ -238,6 +250,8 @@ export default function ApplyForm({ defaultCategory = '', onSubmit, errorMessage
             <input type="text" tabIndex={-1} autoComplete="off" {...register('website')} />
           </label>
         </div>
+
+        <Turnstile {...captcha.widgetProps} className="mt-4 flex flex-col items-center" />
 
         <div className="mt-4 flex justify-center">
           <Button

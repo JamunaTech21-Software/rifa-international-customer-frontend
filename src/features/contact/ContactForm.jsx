@@ -10,7 +10,9 @@ import FormField from '@/components/form/FormField'
 import Select from '@/components/form/Select'
 import Textarea from '@/components/form/Textarea'
 import TextInput from '@/components/form/TextInput'
+import Turnstile from '@/components/form/Turnstile'
 import { site } from '@/data/site'
+import useCaptcha, { scrollToCaptchaError } from '@/features/captcha/useCaptcha'
 import { contactDefaults, contactSchema } from '@/features/contact/schema'
 import useLookups from '@/features/apply/useLookups'
 
@@ -23,7 +25,10 @@ const FORM_FIELD_BY_API_FIELD = Object.fromEntries(
 function focusFirstInvalid() {
   requestAnimationFrame(() => {
     const field = document.querySelector('#contact-form [aria-invalid="true"]')
-    if (!field) return
+    if (!field) {
+      scrollToCaptchaError()
+      return
+    }
     field.scrollIntoView({ behavior: 'smooth', block: 'center' })
     field.focus({ preventScroll: true })
   })
@@ -66,6 +71,8 @@ export default function ContactForm({ defaultSubject = '', presetSubject }) {
     formState: { errors, isSubmitting },
   } = form
 
+  const captcha = useCaptcha(form)
+
   useEffect(() => {
     if (presetSubject?.value) setValue('subject', presetSubject.value, { shouldValidate: true })
   }, [presetSubject, setValue])
@@ -84,8 +91,11 @@ export default function ContactForm({ defaultSubject = '', presetSubject }) {
         fields.forEach((field) =>
           setError(field, { type: 'server', message: error.fields[MESSAGE_FIELDS[field]] }),
         )
-        setFocus(fields[0] ?? 'fullName')
+        if (fields[0] === 'captchaToken') scrollToCaptchaError()
+        else setFocus(fields[0] ?? 'fullName')
       }
+    } finally {
+      captcha.reset() // a captcha token works once
     }
   }
 
@@ -172,6 +182,8 @@ export default function ContactForm({ defaultSubject = '', presetSubject }) {
           <input type="text" tabIndex={-1} autoComplete="off" {...register('website')} />
         </label>
       </div>
+
+      <Turnstile {...captcha.widgetProps} className="mt-4" />
 
       <Button
         type="submit"
