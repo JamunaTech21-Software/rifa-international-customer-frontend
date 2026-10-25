@@ -52,6 +52,7 @@ Form controls take `ref` as a normal prop (React 19), so `{...register('name')}`
 | `/employers` | EmployersPage | FE-14 |
 | `/news`, `/news/:slug`, `/career` | NewsPage, NewsDetailPage, CareerPage | FE-15 |
 | `/faq`, `*` | FaqPage, NotFoundPage (router errorElement: ErrorPage) | FE-16 |
+| `/check-status` | CheckStatusPage (`?ref=<reference>` prefills) | P5-04b |
 | `/dev/ui` | UI kit preview (dev only) | SET-05 |
 
 ## Design rules — match the references exactly
@@ -105,6 +106,7 @@ Form controls take `ref` as a normal prop (React 19), so `{...register('name')}`
 
 - Calls go through `src/api/*` only (built in BE-05). `VITE_API_MOCK=true` uses the in-browser mock.
 - Env vars: see `.env.example`. Copy it to `.env` locally; never commit `.env`.
+- Captcha: Apply, Contact and the status check show a Cloudflare Turnstile widget (`components/form/Turnstile.jsx`, `features/captcha/`) when `VITE_TURNSTILE_SITE_KEY` is set; the token is sent as `captcha_token`. Empty key = no widget.
 
 ## Execution protocol (per Jira story, project RI)
 

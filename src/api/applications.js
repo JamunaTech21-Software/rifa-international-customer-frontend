@@ -17,6 +17,7 @@ export const APPLICATION_FIELDS = {
   passportStatus: 'passport_status',
   declaration: 'declaration',
   website: 'website',
+  captchaToken: 'captcha_token',
 }
 
 /** Builds the multipart body for POST /applications from validated form values. */

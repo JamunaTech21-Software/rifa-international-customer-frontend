@@ -5,11 +5,14 @@ import CloudinaryImage from '@/components/ui/CloudinaryImage'
 import Section from '@/components/ui/Section'
 import Seo from '@/components/ui/Seo'
 import PageHero from '@/components/sections/PageHero'
-import { image } from '@/data/images'
-import { news } from '@/data/news'
+import NewsCardSkeleton from '@/components/sections/NewsCardSkeleton'
 import { formatDate } from '@/lib/format'
+import { newsImage } from '@/lib/newsImage'
+import { useNewsList } from '@/lib/useNews'
 
 export default function NewsPage() {
+  const { news, loading } = useNewsList()
+
   return (
     <>
       <Seo
@@ -35,12 +38,21 @@ export default function NewsPage() {
         className="py-10 lg:py-12"
         containerClassName="2xl:max-w-[96rem] 2xl:px-[2.25rem]"
       >
+        <p className="sr-only" role="status" aria-live="polite">
+          {loading ? 'Loading news' : `${news.length} ${news.length === 1 ? 'article' : 'articles'}`}
+        </p>
         <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {loading &&
+            Array.from({ length: 3 }, (_, index) => (
+              <li key={index} className="min-w-0">
+                <NewsCardSkeleton />
+              </li>
+            ))}
           {news.map((item) => (
             <li key={item.slug} className="min-w-0">
               <Card padding="none" interactive className="flex h-full flex-col overflow-hidden">
                 <CloudinaryImage
-                  publicId={image(item.imageKey)}
+                  publicId={newsImage(item)}
                   alt=""
                   sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
                   className="aspect-[1.8] w-full"

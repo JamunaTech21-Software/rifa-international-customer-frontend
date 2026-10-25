@@ -3,16 +3,30 @@ import { ArrowLeft, CalendarDays } from 'lucide-react'
 import CloudinaryImage from '@/components/ui/CloudinaryImage'
 import Section from '@/components/ui/Section'
 import Seo from '@/components/ui/Seo'
-import { image } from '@/data/images'
-import { getNews } from '@/data/news'
 import { formatDate } from '@/lib/format'
+import { newsImage } from '@/lib/newsImage'
+import { useArticle } from '@/lib/useNews'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 export default function NewsDetailPage() {
   const { slug } = useParams()
-  const article = getNews(slug)
+  const { article, loading } = useArticle(slug)
 
-  // An unknown slug shows the same page as any other missing URL.
+  if (loading) {
+    return (
+      <Section spacing="none" className="py-8 lg:py-10" containerClassName="max-w-4xl">
+        <div role="status" aria-label="Loading the article" className="space-y-4">
+          <div className="h-5 w-48 animate-pulse rounded bg-surface-2" />
+          <div className="h-10 w-3/4 animate-pulse rounded bg-surface-2" />
+          <div className="aspect-[2.2] w-full animate-pulse rounded-card bg-surface-2" />
+          <div className="h-4 w-full animate-pulse rounded bg-surface-2" />
+          <div className="h-4 w-5/6 animate-pulse rounded bg-surface-2" />
+        </div>
+      </Section>
+    )
+  }
+
+  // An unknown, draft or not-yet-published slug shows the same page as any other missing URL.
   if (!article) return <NotFoundPage />
 
   return (
@@ -36,7 +50,7 @@ export default function NewsDetailPage() {
           <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">{article.title}</h1>
 
           <CloudinaryImage
-            publicId={image(article.imageKey)}
+            publicId={newsImage(article)}
             alt=""
             priority
             sizes="(min-width: 896px) 56rem, 100vw"
@@ -44,8 +58,8 @@ export default function NewsDetailPage() {
           />
 
           <div className="mt-6 space-y-4 text-base leading-relaxed text-body sm:text-lg">
-            {article.body.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {article.body.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
             ))}
           </div>
         </article>

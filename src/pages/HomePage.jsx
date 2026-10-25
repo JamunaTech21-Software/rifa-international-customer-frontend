@@ -18,11 +18,12 @@ import CtaBanner from '@/components/sections/CtaBanner'
 import FeatureCard from '@/components/sections/FeatureCard'
 import HomeHero from '@/components/sections/HomeHero'
 import JobCard from '@/components/sections/JobCard'
+import JobCardSkeleton from '@/components/sections/JobCardSkeleton'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import TrustStrip from '@/components/sections/TrustStrip'
 import { categories } from '@/data/categories'
-import { jobs } from '@/data/jobs'
 import { steps7 } from '@/data/process'
+import useJobs from '@/lib/useJobs'
 
 const TRUST_ITEMS = [
   { icon: FileBadge, title: 'RL-693', text: 'Government Approved Recruiting Agency' },
@@ -44,13 +45,13 @@ const WHY_CHOOSE = [
 // Titles only — the full descriptions live on the Recruitment Process page.
 const PROCESS_STEPS = steps7.map(({ icon, title }) => ({ icon, title }))
 
-const LATEST_JOBS = jobs.slice(0, 3)
-
 // The design's "View All Jobs" pill is smaller and has a light border compared with the default outline button.
 const VIEW_ALL_CLASS =
   'h-[2.5625rem] border border-primary-200 px-5 text-[0.9375rem] hover:border-primary-400'
 
 export default function HomePage() {
+  const { jobs, loading } = useJobs()
+
   return (
     <>
       <Seo
@@ -114,9 +115,9 @@ export default function HomePage() {
           </Button>
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {LATEST_JOBS.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
+          {loading
+            ? Array.from({ length: 3 }, (_, index) => <JobCardSkeleton key={index} />)
+            : jobs.slice(0, 3).map((job) => <JobCard key={job.id} job={job} />)}
         </div>
       </Section>
 

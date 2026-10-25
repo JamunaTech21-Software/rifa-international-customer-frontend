@@ -24,6 +24,7 @@ const router = createBrowserRouter([
       { path: 'faq', lazy: page(() => import('@/pages/FaqPage')) },
       { path: 'contact', lazy: page(() => import('@/pages/ContactPage')) },
       { path: 'apply', lazy: page(() => import('@/pages/ApplyPage')) },
+      { path: 'check-status', lazy: page(() => import('@/pages/CheckStatusPage')) },
       { path: 'apply/success', lazy: page(() => import('@/pages/ApplySuccessPage')) },
       // UI kit preview — only registered in development, so it never ships to production.
       ...(import.meta.env.DEV ? [{ path: 'dev/ui', lazy: page(() => import('@/pages/DevUiPage')) }] : []),

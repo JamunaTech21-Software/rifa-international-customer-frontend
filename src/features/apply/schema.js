@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { captchaTokenSchema } from '@/features/captcha/captcha'
 import { ageFromDob } from '@/lib/age'
 
 /**
@@ -98,6 +99,7 @@ export const applySchema = z
     passportCopy: z.any().optional(),
     declaration: z.literal(true, { error: 'Please confirm that the information is true and correct.' }),
     website: z.string().optional(), // honeypot — real visitors never fill it
+    captchaToken: captchaTokenSchema,
   })
   .superRefine((values, context) => {
     const cvProblem = fileProblem(values.cv, 'CV')
@@ -127,4 +129,5 @@ export const applyDefaults = {
   passportCopy: null,
   declaration: false,
   website: '',
+  captchaToken: '',
 }

@@ -13,14 +13,15 @@ import Seo from '@/components/ui/Seo'
 import CategoryCard from '@/components/sections/CategoryCard'
 import CtaBanner from '@/components/sections/CtaBanner'
 import JobCard from '@/components/sections/JobCard'
+import JobCardSkeleton from '@/components/sections/JobCardSkeleton'
 import PageHero from '@/components/sections/PageHero'
 import ProcessSteps from '@/components/sections/ProcessSteps'
 import TrustStrip from '@/components/sections/TrustStrip'
 import { categories, getCategory } from '@/data/categories'
 import { image } from '@/data/images'
-import { jobs, locations } from '@/data/jobs'
 import { steps5 } from '@/data/process'
 import { fieldBase } from '@/lib/formStyles'
+import useJobs from '@/lib/useJobs'
 
 const HERO_TRUST = [
   { icon: ShieldCheck, title: 'Government', text: 'Approved (RL-693)', tone: 'navy' },
@@ -41,12 +42,11 @@ const CATEGORY_OPTIONS = [
   { value: '', label: 'All Categories' },
   ...categories.map((category) => ({ value: category.slug, label: category.name })),
 ]
-const LOCATION_OPTIONS = [{ value: '', label: 'All Locations' }, ...locations]
 
 const filterSelectClass = 'h-10 pr-8 pl-3 text-sm has-[option[value=""]:checked]:text-ink'
 
 // Returns the jobs matching the search text (title, employer type or category name), category and location.
-function filterJobs({ q, category, location }) {
+function filterJobs(jobs, { q, category, location }) {
   const needle = q.trim().toLowerCase()
   return jobs.filter((job) => {
     if (category && job.category !== category) return false
@@ -60,13 +60,21 @@ function filterJobs({ q, category, location }) {
 export default function MalaysiaJobsPage() {
   const [params, setParams] = useSearchParams()
   const listRef = useRef(null)
+  const { jobs, loading } = useJobs()
+
+  // Locations come from the listings themselves, alphabetical.
+  const locations = useMemo(
+    () => [...new Set(jobs.map((job) => job.location))].sort((a, b) => a.localeCompare(b)),
+    [jobs],
+  )
+  const locationOptions = [{ value: '', label: 'All Locations' }, ...locations]
 
   // The URL is the single source of truth, so filters survive a refresh and the browser's back button.
-  // Unknown category/location values (e.g. from an old link) are ignored.
+  // Unknown category/location values (e.g. from an old link) are ignored once the listings have loaded.
   const q = params.get('q') ?? ''
   const category = getCategory(params.get('category') ?? '') ? params.get('category') : ''
-  const location = locations.includes(params.get('location')) ? params.get('location') : ''
-  const results = useMemo(() => filterJobs({ q, category, location }), [q, category, location])
+  const location = loading || locations.includes(params.get('location')) ? (params.get('location') ?? '') : ''
+  const results = useMemo(() => filterJobs(jobs, { q, category, location }), [jobs, q, category, location])
   const hasFilters = Boolean(q || category || location)
 
   const updateFilters = (changes) => {
@@ -199,7 +207,7 @@ export default function MalaysiaJobsPage() {
                     aria-label="Filter by location"
                     value={location}
                     onChange={(event) => updateFilters({ location: event.target.value })}
-                    options={LOCATION_OPTIONS}
+                    options={locationOptions}
                     className={filterSelectClass}
                     wrapperClassName="min-w-0 flex-[1_1_8rem] sm:flex-[1_1_8.5rem]"
                   />
@@ -210,10 +218,20 @@ export default function MalaysiaJobsPage() {
               </div>
 
               <p className="sr-only" role="status" aria-live="polite">
-                {results.length} {results.length === 1 ? 'job' : 'jobs'} found
+                {loading
+                  ? 'Loading jobs'
+                  : `${results.length} ${results.length === 1 ? 'job' : 'jobs'} found`}
               </p>
 
-              {results.length > 0 ? (
+              {loading ? (
+                <ul className="mt-5 grid gap-3.5 md:grid-cols-2 xl:grid-cols-3" aria-label="Loading jobs">
+                  {Array.from({ length: 6 }, (_, index) => (
+                    <li key={index} className="min-w-0">
+                      <JobCardSkeleton className="h-full" />
+                    </li>
+                  ))}
+                </ul>
+              ) : results.length > 0 ? (
                 <ul className="mt-5 grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
                   {results.map((job) => (
                     <li key={job.id} className="min-w-0">

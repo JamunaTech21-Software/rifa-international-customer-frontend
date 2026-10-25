@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { captchaTokenSchema } from '@/features/captcha/captcha'
 
 /**
  * Validation for the Contact form. Rules and messages mirror the backend
@@ -36,6 +37,7 @@ export const contactSchema = z.object({
       'Message must be 10–5000 characters.',
     ),
   website: z.string().optional(), // honeypot — real visitors never fill it
+  captchaToken: captchaTokenSchema,
 })
 
 export const contactDefaults = {
@@ -45,4 +47,5 @@ export const contactDefaults = {
   subject: '',
   message: '',
   website: '',
+  captchaToken: '',
 }
